@@ -14,7 +14,7 @@ const AboutScreen = ({navigation}) => {
       </View>
       <View
         style={{
-          padding: 8,
+          paddingHorizontal: 8,
           borderBottomColor: '#dedede',
           borderBottomWidth: 1,
           paddingVertical: 12,
@@ -24,7 +24,7 @@ const AboutScreen = ({navigation}) => {
           aplikasi ini
         </Text>
       </View>
-      <View style={{paddingVertical: 6, marginTop: 10}}>
+      <View style={{paddingVertical: 6, paddingHorizontal: 10, marginTop: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>
           Frequently Ask Questions
         </Text>

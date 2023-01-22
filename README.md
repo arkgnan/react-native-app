@@ -1,0 +1,4 @@
+ - Mockup : [Design Figma](https://www.figma.com/file/om7KTHs9kt2J31CVNiiQbV/chuck-norris-jokes?node-id=0:1&t=p5X8J0bsLcZFohHW-1)
+ - Repo : [Github](https://github.com/arkgnan/react-native-final-project-40)
+ - Demo : [Youtube](https://youtu.be/lx_3SKwtnVc)
+ - File Apk : [Drive](https://drive.google.com/file/d/1-gGwdbc5r7572RFeBQ7Cx8YJxO9PTn3T/view?usp=share_link)
