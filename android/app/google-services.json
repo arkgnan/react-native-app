@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "724684582512",
+    "project_id": "tugas-sanbercode",
+    "storage_bucket": "tugas-sanbercode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724684582512:android:717baf41d149d8a8fe4eb5",
+        "android_client_info": {
+          "package_name": "com.reactnativeprojectlearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724684582512-q0blueathrl7gooa0sfbr78r57n0647s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdxyNDkP0i_YDrWm_ZVoyuQ1zwqXOKIF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724684582512-q0blueathrl7gooa0sfbr78r57n0647s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
