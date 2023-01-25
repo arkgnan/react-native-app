@@ -6,9 +6,18 @@ import AppButton from '../../components/ButtonCustom';
 const LoginScreen = ({route, navigation}) => {
   const [password, setPassword] = useState('');
   const {state, handleFunction} = useContext(GlobalContext);
-  const {handleValidEmail, handleLogin} = handleFunction;
+  const {handleValidEmail, handleLogin, handleCheckLogin} = handleFunction;
   const {email, setEmail, emailValidError, errorMessage} = state;
   const {isRegister} = route.params;
+
+  useEffect(() => {
+    handleCheckLogin()
+      .then(res => {
+        console.log('sudah login');
+        navigation.replace('MainApp');
+      })
+      .catch(error => {});
+  }, []);
 
   useEffect(() => {
     if (isRegister !== undefined) {

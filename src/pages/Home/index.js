@@ -32,7 +32,6 @@ const HomeScreen = ({navigation}) => {
     setLoading(false);
   };
   useEffect(() => {
-    console.log(jokes);
     if (Object.keys(user).length === 0) {
       navigation.navigate('Login');
     }

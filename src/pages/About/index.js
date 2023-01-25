@@ -3,10 +3,12 @@ import React, {useContext} from 'react';
 import {GlobalContext} from '../../context/GlobalContext';
 import {SanbercodeLogo} from '../../assets';
 import {ScrollView} from 'react-native-gesture-handler';
+import AppButton from '../../components/ButtonCustom';
 
 const AboutScreen = ({navigation}) => {
-  const {state} = useContext(GlobalContext);
+  const {state, handleFunction} = useContext(GlobalContext);
   const {user} = state;
+  const {handleLogout} = handleFunction;
   return (
     <ScrollView>
       <View>
@@ -23,6 +25,11 @@ const AboutScreen = ({navigation}) => {
           Anda login dengan {user.email}.{'\n'}Terima kasih telah mencoba
           aplikasi ini
         </Text>
+        <AppButton
+          title="Logout"
+          backgroundColor="#007bff"
+          onPress={() => handleLogout()}
+        />
       </View>
       <View style={{paddingVertical: 6, paddingHorizontal: 10, marginTop: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>

@@ -1,6 +1,7 @@
 import {createContext, useContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const GlobalContext = createContext();
 
@@ -11,6 +12,38 @@ export const GlobalProvider = ({children}) => {
   const [emailValidError, setEmailValidError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [jokes, setJokes] = useState([]);
+
+  const storeUserSession = async $auth => {
+    try {
+      await EncryptedStorage.setItem(
+        'user_session',
+        JSON.stringify({
+          email: $auth.email,
+          uid: $auth.uid,
+        }),
+      );
+    } catch (error) {
+      // There was an error on the native side
+    }
+  };
+
+  const handleCheckLogin = async () => {
+    try {
+      const session = await EncryptedStorage.getItem('user_session');
+      console.log('session', session);
+      if (session !== undefined && session != null) {
+        console.log('is login true');
+        setUser(JSON.parse(session));
+        return session;
+      } else {
+        console.log('login dulu');
+        throw false;
+      }
+    } catch (error) {
+      // There was an error on the native side
+      throw false;
+    }
+  };
 
   const handleValidEmail = val => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -24,6 +57,21 @@ export const GlobalProvider = ({children}) => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await EncryptedStorage.removeItem('user_session');
+      console.log('clear session');
+      setUser({});
+      navigation.navigate('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+    } catch (error) {
+      // There was an error on the native side
+    }
+  };
+
   const handleLogin = password => {
     if (email === '' || password === '') {
       setErrorMessage('Email Atau Password tidak boleh kosong');
@@ -31,12 +79,15 @@ export const GlobalProvider = ({children}) => {
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(res => {
-          // change this to internal storage, such as Async Storage (deprecated), Secure Storage, Encrypted Storage, etc.
           const userInfo = auth().currentUser;
           setUser(userInfo);
-          // end
+          storeUserSession(userInfo);
           setErrorMessage('');
-          navigation.navigate('Home');
+          navigation.navigate('MainApp');
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'MainApp'}],
+          });
         })
         .catch(err => {
           setErrorMessage(err.message);
@@ -76,6 +127,8 @@ export const GlobalProvider = ({children}) => {
     handleValidEmail,
     handleLogin,
     handleRegister,
+    handleCheckLogin,
+    handleLogout,
   };
 
   return (

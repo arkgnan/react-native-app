@@ -53,7 +53,7 @@ const Router = () => {
   const {state} = useContext(GlobalContext);
   const {setJokes} = state;
   return (
-    <Stack.Navigator initialRouteName="MainApp">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen
         name="MainApp"
