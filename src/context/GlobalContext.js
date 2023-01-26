@@ -1,9 +1,11 @@
 import {createContext, useContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
-import EncryptedStorage from 'react-native-encrypted-storage';
+import {MMKV} from 'react-native-mmkv';
 
 export const GlobalContext = createContext();
+
+export const storage = new MMKV();
 
 export const GlobalProvider = ({children}) => {
   const navigation = useNavigation();
@@ -13,35 +15,26 @@ export const GlobalProvider = ({children}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [jokes, setJokes] = useState([]);
 
-  const storeUserSession = async $auth => {
-    try {
-      await EncryptedStorage.setItem(
-        'user_session',
-        JSON.stringify({
-          email: $auth.email,
-          uid: $auth.uid,
-        }),
-      );
-    } catch (error) {
-      // There was an error on the native side
-    }
+  const storeUserSession = $auth => {
+    storage.set(
+      'user_session',
+      JSON.stringify({
+        email: $auth.email,
+        uid: $auth.uid,
+      }),
+    );
   };
 
-  const handleCheckLogin = async () => {
-    try {
-      const session = await EncryptedStorage.getItem('user_session');
-      console.log('session', session);
-      if (session !== undefined && session != null) {
-        console.log('is login true');
-        setUser(JSON.parse(session));
-        return session;
-      } else {
-        console.log('login dulu');
-        throw false;
-      }
-    } catch (error) {
-      // There was an error on the native side
-      throw false;
+  const handleCheckLogin = () => {
+    const session = storage.getString('user_session');
+    console.log('session', session);
+    if (session !== undefined) {
+      console.log('is login true');
+      setUser(JSON.parse(session));
+      return session;
+    } else {
+      console.log('login dulu');
+      return false;
     }
   };
 
@@ -57,19 +50,15 @@ export const GlobalProvider = ({children}) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await EncryptedStorage.removeItem('user_session');
-      console.log('clear session');
-      setUser({});
-      navigation.navigate('Login');
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Login'}],
-      });
-    } catch (error) {
-      // There was an error on the native side
-    }
+  const handleLogout = () => {
+    storage.delete('user_session');
+    console.log('clear session');
+    setUser({});
+    navigation.navigate('Login');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
+    });
   };
 
   const handleLogin = password => {

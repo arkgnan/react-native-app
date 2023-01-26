@@ -9,14 +9,12 @@ const SplashScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       console.log('open app');
-      handleCheckLogin()
-        .then(res => {
-          console.log(res);
-          navigation.replace('MainApp');
-        })
-        .catch(e => {
-          navigation.replace('Login');
-        });
+      const session = handleCheckLogin();
+      if (session === false) {
+        navigation.replace('Login');
+      } else {
+        navigation.replace('MainApp');
+      }
     }, 3000);
   }, [navigation]);
   return (

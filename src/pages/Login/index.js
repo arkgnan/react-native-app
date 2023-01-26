@@ -11,12 +11,11 @@ const LoginScreen = ({route, navigation}) => {
   const {isRegister} = route.params;
 
   useEffect(() => {
-    handleCheckLogin()
-      .then(res => {
-        console.log('sudah login');
-        navigation.replace('MainApp');
-      })
-      .catch(error => {});
+    const session = handleCheckLogin();
+    if (session !== false) {
+      console.log('sudah login');
+      navigation.replace('MainApp');
+    }
   }, []);
 
   useEffect(() => {
